@@ -31,8 +31,7 @@ fn main() {
         tx.send(buf).expect("send err");
     });
     loop {
-        let a = rx.recv();
-        match a {
+        match rx.recv() {
             Ok(a) => println!("{}", handle(a)),
             Err(err) => {
                 println!("{}", err);
