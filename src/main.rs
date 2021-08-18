@@ -6,14 +6,6 @@ use std::process::Command;
 use std::sync::mpsc;
 use std::thread;
 
-// fn main() {
-//     let output = Command::new("kubectl")
-//         .args(["get", "pods", "-n", "gcp"])
-//         .output()
-//         .expect("执行异常，提示");
-//     let ls_list = String::from_utf8(output.stdout).unwrap();
-//     println!("{}", ls_list);
-// }
 
 fn handle(str: String) -> String {
     let info = Regex::new("info").expect("regex info err");
@@ -55,5 +47,4 @@ fn main() {
     //     println!("{}", handle(item));
     //     println!("cccccccc");
     // }
-    println!("dddddDD")
 }
