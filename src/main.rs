@@ -1,8 +1,19 @@
 // use colored::Colorize;
 use regex::Regex;
 use std::io::{self, Read};
+use std::process::Command;
+// use
 use std::sync::mpsc;
 use std::thread;
+
+// fn main() {
+//     let output = Command::new("kubectl")
+//         .args(["get", "pods", "-n", "gcp"])
+//         .output()
+//         .expect("执行异常，提示");
+//     let ls_list = String::from_utf8(output.stdout).unwrap();
+//     println!("{}", ls_list);
+// }
 
 fn handle(str: String) -> String {
     let info = Regex::new("info").expect("regex info err");
@@ -22,17 +33,27 @@ fn handle(str: String) -> String {
 
 fn main() {
     let (tx, rx) = mpsc::channel();
-    thread::spawn(move || loop {
+    let a = thread::spawn(move || loop {
         let mut buf = String::new();
         io::stdin().read_line(&mut buf).expect("read err");
-        match tx.send(buf) {
-            Ok(_) => {}
-            Err(_) => {
+        tx.send(buf).expect("send err");
+    });
+    loop {
+        let a = rx.recv();
+        match a {
+            Ok(a) => println!("{}", handle(a)),
+            Err(err) => {
+                println!("{}", err);
                 break;
             }
         }
-    });
-    for item in rx.recv() {
-        println!("{}", handle(item));
     }
+    // for item in rx.recv() {
+    //     println!("bbbbbbb");
+    //     match item {
+    //     }
+    //     println!("{}", handle(item));
+    //     println!("cccccccc");
+    // }
+    println!("dddddDD")
 }
