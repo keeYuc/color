@@ -25,7 +25,7 @@ fn handle(str: String) -> String {
 
 fn main() {
     let (tx, rx) = mpsc::channel();
-    let a = thread::spawn(move || loop {
+    thread::spawn(move || loop {
         let mut buf = String::new();
         io::stdin().read_line(&mut buf).expect("read err");
         tx.send(buf).expect("send err");
